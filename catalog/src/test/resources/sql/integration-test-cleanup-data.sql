@@ -1,0 +1,2 @@
+DELETE FROM watch;
+DELETE FROM brand;
