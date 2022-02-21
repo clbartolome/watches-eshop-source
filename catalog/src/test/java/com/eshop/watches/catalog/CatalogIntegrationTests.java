@@ -3,21 +3,21 @@ package com.eshop.watches.catalog;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 import java.util.List;
-
-import com.eshop.watches.catalog.entity.Brand;
-import com.eshop.watches.catalog.entity.Watch;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.web.client.RestTemplate;
-
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/integration-test-data.sql")
@@ -44,19 +44,58 @@ public class CatalogIntegrationTests {
   @Test
   public void getWatchesTest() {
 
-    List<Watch> watches = restTemplate.getForObject(baseUrl + "/watches", List.class);
+    ResponseEntity<List> response = restTemplate.getForEntity(baseUrl + "/watches", List.class);
     assertAll(
-        () -> assertNotNull(watches),
-        () -> assertEquals(4, watches.size()));
+        () -> assertNotNull(response.getBody()),
+        () -> assertEquals(4, response.getBody().size()),
+        () -> assertEquals(HttpStatus.OK, response.getStatusCode()));
+  }
+
+  @Test
+  @Sql(scripts = "/sql/integration-test-cleanup-data.sql", executionPhase = BEFORE_TEST_METHOD)
+  public void getWatchesTest_noContent() {
+
+    ResponseEntity<List> response = restTemplate.getForEntity(baseUrl + "/watches", List.class);
+    assertAll(
+        () -> assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode()));
+  }
+
+  @Test
+  public void getWatchesByBrandTest() {
+
+    ResponseEntity<List> response = restTemplate.getForEntity(baseUrl + "/watches/brands/1", List.class);
+    assertAll(
+        () -> assertNotNull(response.getBody()),
+        () -> assertEquals(3, response.getBody().size()),
+        () -> assertEquals(HttpStatus.OK, response.getStatusCode()));
+  }
+
+  @Test
+  @Sql(scripts = "/sql/integration-test-cleanup-data.sql", executionPhase = BEFORE_TEST_METHOD)
+  public void getWatchesByBrandTest_noContent() {
+
+    ResponseEntity<List> response = restTemplate.getForEntity(baseUrl + "/watches/brands/5", List.class);
+    assertAll(
+        () -> assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode()));
   }
 
   @Test
   public void getBrandsTest() {
 
-    List<Brand> brands = restTemplate.getForObject(baseUrl + "/brands", List.class);
+    ResponseEntity<List> response = restTemplate.getForEntity(baseUrl + "/brands", List.class);
     assertAll(
-        () -> assertNotNull(brands),
-        () -> assertEquals(2, brands.size()));
+        () -> assertNotNull(response.getBody()),
+        () -> assertEquals(2, response.getBody().size()),
+        () -> assertEquals(HttpStatus.OK, response.getStatusCode()));
+  }
+
+  @Test
+  @Sql(scripts = "/sql/integration-test-cleanup-data.sql", executionPhase = BEFORE_TEST_METHOD)
+  public void getBrandsTest_noContent() {
+
+    ResponseEntity<List> response = restTemplate.getForEntity(baseUrl + "/brands", List.class);
+    assertAll(
+        () -> assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode()));
   }
 
   // https://www.vincenzoracca.com/en/blog/framework/spring/integration-test/

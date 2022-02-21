@@ -17,10 +17,12 @@ public class WatchesService {
   }
 
   public List<Watch> getAllWatches(){
-
     return watchRepository.findAll();    
   }
 
+  public List<Watch> getWatchesByBrandId(Long brandId){
 
+    return watchRepository.findWatchesByBrandId(brandId);
+  }
   
 }
