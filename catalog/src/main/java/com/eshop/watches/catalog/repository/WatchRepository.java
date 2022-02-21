@@ -2,7 +2,6 @@ package com.eshop.watches.catalog.repository;
 
 import java.util.List;
 
-import com.eshop.watches.catalog.entity.Brand;
 import com.eshop.watches.catalog.entity.Watch;
 
 import org.springframework.data.jpa.repository.JpaRepository;
