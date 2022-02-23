@@ -1,4 +1,4 @@
-# EshopUi
+# Watches eShop: EshopUi
 
 ## Run locally
 
