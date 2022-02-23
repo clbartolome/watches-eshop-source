@@ -1,0 +1,37 @@
+{
+  "watches" : [ 
+    {
+      "id": 1,
+      "model": "Oyster Perpetual",
+      "brand": {
+        "id": 1,
+        "name": "Rolex"
+      }
+    },
+    {
+      "id": 2,
+      "model": "Submariner",
+      "brand": {
+        "id": 1,
+        "name": "Rolex"
+      }
+    },
+    {
+      "id": 3,
+      "model": "Aquanaut",
+      "brand": {
+        "id": 2,
+        "name": "Patek Philippe"
+      }
+    },
+    {
+      "id": 4,
+      "model": "Seamaster",
+      "brand": {
+        "id": 3,
+        "name": "Omega"
+      }
+    } 
+    
+  ]
+}
