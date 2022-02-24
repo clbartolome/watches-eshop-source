@@ -1,34 +1,51 @@
 # Watches eShop: Payment
 
+## Configuration
+
+Done via Environment Variables:
+
+- **PORT**: NodeJS application exposed port (default value: 5000)
+- **DB_HOST**: MongoDB host url (default value: "localhost")
+- **DB_PORT**: MongoDB port (default value: 27017)
+- **DB_NAME**: MongoDB database for payments (default value: "payment-db",)
+- **DB_PARAMS**: MongoDB connection parameters (default value: "authSource=admin")
+- **DB_USER**: MongoDB user name(default value: "admin")
+- **DB_PASS**: MongoDB user password (default value: "pass)
+
 ## Run locally
 
 ```sh
-# Start a mock server (npm install -g json-server)
-json-server --watch src/mock/mock-server.json
+# Create a Network for mongo and mongo express
+podman network create mongo-express-network
 
-# Open new terminal and start ng server
-ng serve
+# Start mongoDB
+podman run -d \
+  -p 27017:27017 \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=pass \
+  --name mongo-payments-server \
+  --net mongo-express-network \
+  mongo
+
+# Start Mongo express
+
+podman run -d \
+  -p 8081:8081 \
+  -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+  -e ME_CONFIG_MONGODB_ADMINPASSWORD=pass \
+  -e ME_CONFIG_MONGODB_SERVER=mongo-payments-server \
+  --name mongo-express \
+  --net mongo-express-network \
+  mongo-express
+
+# Open new terminal and start nodejs app with default properties
+node server.js
 ```
 
-## OpenShift notes
 
-```sh
-# https://developers.redhat.com/blog/2019/11/27/handling-angular-environments-in-continuous-delivery-with-red-hat-openshift#how_to_apply_the_configuration_in_red_hat_openshift
+## Configuration notes
 
-# Create configmap
-oc create configmap config --from-file=<configMapLocation>/config.json
-
-# Set volume
-oc set volume dc/angular --add --type=configmap --configmap-name=config --mount-path=/opt/app-root/src/assets/config --overwrite
-```
+Followed: (https://www.bezkoder.com/node-express-mongodb-crud-rest-api/)
 
 
-## NPM and Node notes
-
-```sh
-# Init NPM on empty project directory
-npm init -y
-
-# Install body-parser and express
-npm install express body-parser --save
 

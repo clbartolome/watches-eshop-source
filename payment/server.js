@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const appConfig = require("./app/config/app.config.js");
+
 const app = express();
 
 var corsOptions = {
@@ -32,11 +34,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Payments [Watches eShop]. Payments API in /payments" });
 });
 
-// https://www.bezkoder.com/node-express-mongodb-crud-rest-api/
 
-require("./app/routes/tutorial.routes")(app);
+require("./app/routes/payment.routes")(app);
+
 // set port, listen for requests
-const PORT = process.env.PORT || 5000;
+const PORT = appConfig.port;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

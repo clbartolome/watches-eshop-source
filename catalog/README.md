@@ -1,5 +1,15 @@
 # Watches eShop: Catalog
 
+## Configuration
+
+Done via Environment Variables:
+
+- **DB_HOST**: PostgreSQL host url
+- **DB_PORT**: PostgreSQL port
+- **DB_NAME**: PostgreSQL database for catalog
+- **DB_USER**: PostgreSQL user name
+- **DB_PASS**: PostgreSQL user password
+
 ## Run Locally
 
 Requires podman or other container system
