@@ -15,12 +15,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/integration-test-data.sql")
 @Sql(scripts = "/sql/integration-test-cleanup-data.sql", executionPhase = AFTER_TEST_METHOD)
+@ActiveProfiles("test")
 public class CatalogIntegrationTests {
 
   @LocalServerPort

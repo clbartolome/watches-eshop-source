@@ -1,4 +1,4 @@
-# EshopUi
+# Watches eShop: EshopUi
 
 ## Run locally
 
@@ -10,7 +10,7 @@ json-server --watch src/mock/mock-server.json
 ng serve
 ```
 
-## OpenShift notes
+## OpenShift notes (CONFIGURATION)
 
 ```sh
 # https://developers.redhat.com/blog/2019/11/27/handling-angular-environments-in-continuous-delivery-with-red-hat-openshift#how_to_apply_the_configuration_in_red_hat_openshift

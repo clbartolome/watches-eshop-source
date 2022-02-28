@@ -1,0 +1,33 @@
+<div class="col-lg-12 p-3 p-lg-5 pt-lg-3">
+  <h1 class="display-12 fw-bold lh-1">Payment</h1>
+</div>
+<div>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <div class="mb-3">
+        <label for="imput1" class="form-label" style="font-weight: bold;">Watch</label>
+        <input type="text" class="form-control" formControlName="description">
+      </div>
+      <div class="mb-3">
+        <label for="imput2" class="form-label" style="font-weight: bold;">Price</label>
+        <input type="text" class="form-control" formControlName="price">
+      </div>
+      <div class="mb-3">
+        <label for="imput3" class="form-label" style="font-weight: bold;">Card Holder</label>
+        <input type="text" class="form-control" formControlName="name" aria-describedby="help">
+        <div id="help" class="form-text">Card holder name and surname.</div>
+      </div>
+      <div class="mb-3">
+        <label for="imput4" class="form-label" style="font-weight: bold;">Card Number</label>
+        <input type="text" class="form-control" formControlName="card" aria-describedby="help">
+        <div id="help" class="form-text">Card number without spaces.</div>
+        
+      </div>
+      <div >
+        <button class="btn btn-success btn-lg active float-end" style="margin-left: 10px;">Pay</button>
+        <button class="btn btn-danger btn-lg active float-end" type="button" (click)="onCancel()" >Cancel</button>
+
+      </div>
+    </div>
+  </form>
+</div>

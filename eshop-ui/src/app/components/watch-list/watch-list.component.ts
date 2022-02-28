@@ -14,10 +14,9 @@ export class WatchListComponent implements OnInit {
   }
   ngOnInit() { }
   readWatch() {
-    this.apiService.getEmployees().subscribe((data) => {
+    this.apiService.getWatches().subscribe((data) => {
       this.Watch = data;
     })
   }
-
 
 }

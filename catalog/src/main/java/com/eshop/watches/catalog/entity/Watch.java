@@ -18,12 +18,20 @@ public class Watch {
 
   private String model;
 
+  private Integer price;
+
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "brand_id", referencedColumnName = "id")
   private Brand brand;
   
   public Long getId() {
     return id;
+  }
+  public Integer getPrice() {
+    return price;
+  }
+  public void setPrice(Integer price) {
+    this.price = price;
   }
   public void setId(Long id) {
     this.id = id;

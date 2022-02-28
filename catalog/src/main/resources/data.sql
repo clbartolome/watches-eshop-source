@@ -5,13 +5,13 @@ INSERT INTO brand (id, name) VALUES
   (4, 'Vacheron Constantin'),
   (5, 'A.Lange and Sohne') ON CONFLICT DO NOTHING;
 
-INSERT INTO watch (id, model, brand_id) VALUES 
-  (1, 'Submariner', 1),
-  (2, 'Oyster Perpetual', 1),
-  (3, 'Celini', 1),
-  (4, 'Nautilus', 2),
-  (5, 'Aquanaut', 2),
-  (6, 'Seamaster', 3),
-  (7, 'Speedmaster', 3),
-  (8, 'Overseas', 4),
-  (9, 'Saxonia', 5) ON CONFLICT DO NOTHING;
+INSERT INTO watch (id, model, brand_id, price) VALUES 
+  (1, 'Submariner', 1, 14300),
+  (2, 'Oyster Perpetual', 1, 5900),
+  (3, 'Celini', 1, 17000),
+  (4, 'Nautilus', 2, 26970),
+  (5, 'Aquanaut', 2, 20230),
+  (6, 'Seamaster', 3, 5700),
+  (7, 'Speedmaster', 3, 6700),
+  (8, 'Overseas', 4, 32300),
+  (9, 'Saxonia', 5, 17600) ON CONFLICT DO NOTHING;

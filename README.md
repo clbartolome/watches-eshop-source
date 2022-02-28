@@ -8,3 +8,4 @@
 ## Components
 - [Catalog](catalog/README.md)
 - [eShop User Interface](eshop-ui/README.md)
+- [Payment](payment/README.md)
