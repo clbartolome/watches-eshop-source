@@ -4,7 +4,7 @@ module.exports = mongoose => {
       name: String,
       description: String,
       card: String,
-      price: String
+      price: Number
     },
     { timestamps: true }
   );

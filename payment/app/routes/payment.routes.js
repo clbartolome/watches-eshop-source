@@ -5,5 +5,5 @@ module.exports = app => {
   router.post("/", payments.create);
   // Retrieve all Payments
   router.get("/", payments.findAll);
-  app.use('/api/payments', router);
+  app.use('/payments', router);
 };

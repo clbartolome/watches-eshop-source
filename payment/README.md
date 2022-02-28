@@ -40,6 +40,9 @@ podman run -d \
 
 # Open new terminal and start nodejs app with default properties
 node server.js
+
+# Validate
+curl localhost:5000/payments -v
 ```
 
 

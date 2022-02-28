@@ -1,8 +1,9 @@
 {
-  "watches" : [ 
+  "watches": [
     {
       "id": 1,
       "model": "Oyster Perpetual",
+      "price": 1000,
       "brand": {
         "id": 1,
         "name": "Rolex"
@@ -11,6 +12,7 @@
     {
       "id": 2,
       "model": "Submariner",
+      "price": 11111,
       "brand": {
         "id": 1,
         "name": "Rolex"
@@ -19,6 +21,7 @@
     {
       "id": 3,
       "model": "Aquanaut",
+      "price": 20000,
       "brand": {
         "id": 2,
         "name": "Patek Philippe"
@@ -27,11 +30,31 @@
     {
       "id": 4,
       "model": "Seamaster",
+      "price": 4500,
       "brand": {
         "id": 3,
         "name": "Omega"
       }
-    } 
-    
+    }
+  ],
+  "payments": [
+    {
+      "id": "111222333",
+      "name": "Carlos López",
+      "description": "Patek Philippe Aquanaut",
+      "card": "0192399199339122",
+      "price": 20000,
+      "createdAt": "2022-02-25T14:02:44.252Z",
+      "updatedAt": "2022-02-25T14:02:44.252Z"
+    },
+    {
+      "id": "111222341",
+      "name": "Carlos López",
+      "description": "Rolex Submariner",
+      "card": "0192399199339122",
+      "price": 11111,
+      "createdAt": "2021-09-25T14:02:44.252Z",
+      "updatedAt": "2021-09-25T14:02:44.252Z"
+    }
   ]
 }

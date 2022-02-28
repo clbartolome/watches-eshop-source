@@ -1,4 +1,6 @@
 {
-  "baseUrl": "http://localhost:3000",
-  "basePath": "/watches"
+  "watchUrl": "http://localhost:3000",
+  "watchPath": "/watches",
+  "paymentUrl": "http://localhost:3000",
+  "paymentPath": "/payments"
 }
