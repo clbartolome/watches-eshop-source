@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "nodejs-health-checker": "^1.4.7"
+  }
+}

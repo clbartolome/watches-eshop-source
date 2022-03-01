@@ -12,6 +12,7 @@ import localeES from '@angular/common/locales/es';
 import { PaymentCreateComponent } from './components/payment-create/payment-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentListComponent } from './components/payment-list/payment-list.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
 registerLocaleData(localeES);
 
 export function initConfig(appConfig: AppConfigService) {
@@ -22,7 +23,8 @@ export function initConfig(appConfig: AppConfigService) {
     AppComponent,
     WatchListComponent,
     PaymentCreateComponent,
-    PaymentListComponent
+    PaymentListComponent,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,

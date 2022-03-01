@@ -12,6 +12,26 @@ Done via Environment Variables:
 - **DB_USER**: MongoDB user name(default value: "admin")
 - **DB_PASS**: MongoDB user password (default value: "pass)
 
+## API Documentation & Other Tools
+
+API calls:
+
+- Get all brands [GET]: `/payments`. Example
+  ```sh
+  curl -X GET http://localhost:5000/payments/ | jq
+  ```
+- Create order [POST]: `/payments`. Example
+  ```sh
+  curl -X POST \
+    -d '{"name": "Carlos López","description": "Rolex - Oyster Perpetual","card": "05891020887217261627","price": 7500}' \
+    -H "Content-Type: application/json" \
+    http://localhost:5000/payments/ -v
+  ```
+
+API live documentation and other helpfull resources can be found at:
+
+- Health: `/health/liveness` | `/health/readiness`
+
 ## Run locally
 
 ```sh

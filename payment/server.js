@@ -30,8 +30,31 @@ db.mongoose
   });
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Payments [Watches eShop]. Payments API in /payments" });
+app.get('/health/liveness', (req, res) => {
+  res.status(200).send('Ok');
+});
+
+app.get('/health/readiness', (req, res) => {
+  if (db.mongoose.connection.readyState == 1){
+    res.status(200).send('Ok');
+  }
+  res.status(500).send('Application not ready');
+  
+});
+
+app.get('/', async (_req, res, _next) => {
+	// optional: add further things to check (e.g. connecting to dababase)
+	const healthcheck = {
+		uptime: process.uptime(),
+		message: 'OK',
+		timestamp: Date.now()
+	};
+	try {
+		res.send(healthcheck);
+	} catch (e) {
+		healthcheck.message = e;
+		res.status(503).send();
+	}
 });
 
 

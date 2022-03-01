@@ -41,6 +41,27 @@ export class ApiService {
       )
   }
 
+  // Get all payments
+  getOrders() {
+    return this.http.get(`${this.config.getConfig().orderUrl}${this.config.getConfig().orderPath}`);
+  }
+
+  createOrder(data: any): Observable<any> {
+    let url = `${this.config.getConfig().orderUrl}${this.config.getConfig().orderPath}`;
+    return this.http.post(url, data)
+      .pipe(
+        catchError(this.errorMgmt)
+      )
+  }
+
+  // Get all payments
+  updateOrderStatus(id: any): Observable<any> {
+    return this.http.put(`${this.config.getConfig().orderUrl}${this.config.getConfig().orderPath}/next/${id}`, null)
+      .pipe(
+        catchError(this.errorMgmt)
+      );
+  }
+
   // Error handling 
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
