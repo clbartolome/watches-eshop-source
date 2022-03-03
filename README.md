@@ -81,7 +81,7 @@ app.openshift.io/runtime=postgresql \
 -n watches-eshop
 
 # Order
-oc new-build --name=order oc https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
+oc new-build  https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
   --dockerfile='order/src/main/docker/Dockerfile.jvm' \
   --strategy=docker \
   -n watches-eshop
