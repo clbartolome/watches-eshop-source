@@ -1,1 +1,1 @@
-ARTIFACT_COPY_ARGS=-p -r lib/ *-runner.jar
+S2I_SOURCE_DEPLOYMENTS_FILTER=-p -r lib/ *-runner.jar
