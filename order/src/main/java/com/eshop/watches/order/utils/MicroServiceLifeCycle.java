@@ -32,7 +32,7 @@ class MicroServiceLifeCycle {
   }
 
   void onStop(@Observes ShutdownEvent ev) {
-      LOGGER.info("The Greetings API is stopping...");
+      LOGGER.info("The Order API is stopping...");
   }
 }
 
