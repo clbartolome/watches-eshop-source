@@ -105,5 +105,5 @@ app.openshift.io/runtime=quarkus \
 oc annotate deploy order app.openshift.io/connects-to='[{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"order-db"}]' -n watches-eshop
 
 # Validate
-curl http://order-watches-eshop.{cluster-domain}/watches | jq
+curl http://order-watches-eshop.{cluster-domain}/orders | jq
 ```
