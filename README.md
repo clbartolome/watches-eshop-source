@@ -12,7 +12,7 @@
 
 ## OpenShift Deployment
 
-- Create project
+- Create project and configure 
 
 ```sh
 # Create project
