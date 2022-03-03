@@ -80,15 +80,9 @@ app.kubernetes.io/part-of=watches-eshop \
 app.openshift.io/runtime=postgresql \
 -n watches-eshop
 
-# Order
-oc new-build  https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
-  --dockerfile='order/src/main/docker/Dockerfile.jvm' \
-  --strategy=docker \
-  -n watches-eshop
-
 
 oc new-app --name=order \
-  openshift/ubi8-openjdk-11:1.3~https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
+  openshift/ubi8-openjdk-11~https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
   -e DB_HOST=order-db \
   -e DB_PORT=5432 \
   -e DB_NAME=order-db \
