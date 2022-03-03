@@ -82,7 +82,7 @@ app.openshift.io/runtime=postgresql \
 
 # Catalog
 oc new-app --name=order \
-  openshift/ubi8-openjdk-11:1.3~https://github.com/clbartolome/watches-eshop-source --context-dir=order \
+  openshift/ubi8-openjdk-11:1.3~https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
   -e DB_HOST=order-db \
   -e DB_PORT=5432 \
   -e DB_NAME=order-db \
