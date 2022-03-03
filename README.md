@@ -50,8 +50,6 @@ oc new-app --name=catalog \
 # Expose service
 oc expose svc catalog
 
-# Validate
-curl http://catalog-watches-eshop.{cluster-domain}/watches | jq
 
 # Catalog Labels
 oc label deploy catalog \
@@ -61,6 +59,9 @@ app.openshift.io/runtime=spring-boot \
 
 # Catalog Annotations
 oc annotate deploy catalog app.openshift.io/connects-to='[{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"catalog-db"}]' -n watches-eshop
+
+# Validate
+curl http://catalog-watches-eshop.{cluster-domain}/watches | jq
 ```
 
 - Deploy Order
@@ -81,8 +82,7 @@ app.openshift.io/runtime=postgresql \
 
 # Catalog
 oc new-app --name=order \
-  https://github.com/clbartolome/watches-eshop-source --context-dir=order \
-  -i ubi8-openjdk-11:1.3 \
+  openshift/ubi8-openjdk-11:1.3~https://github.com/clbartolome/watches-eshop-source --context-dir=order \
   -e DB_HOST=order-db \
   -e DB_PORT=5432 \
   -e DB_NAME=order-db \
@@ -93,8 +93,6 @@ oc new-app --name=order \
 # Expose service
 oc expose svc order
 
-# Validate
-curl http://order-watches-eshop.{cluster-domain}/watches | jq
 
 # Catalog Labels
 oc label deploy order \
@@ -104,4 +102,7 @@ app.openshift.io/runtime=quarkus \
 
 # Catalog Annotations
 oc annotate deploy order app.openshift.io/connects-to='[{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"order-db"}]' -n watches-eshop
+
+# Validate
+curl http://order-watches-eshop.{cluster-domain}/watches | jq
 ```

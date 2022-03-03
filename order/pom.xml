@@ -97,44 +97,45 @@
       <url>https://maven.repository.redhat.com/ga</url>
     </pluginRepository>
   </pluginRepositories>
+
   <build>
     <plugins>
       <plugin>
-        <groupId>${quarkus.platform.group-id}</groupId>
+        <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus.platform.version}</version>
-        <extensions>true</extensions>
+        <version>${quarkus-plugin.version}</version>
         <executions>
           <execution>
             <goals>
               <goal>build</goal>
-              <goal>generate-code</goal>
-              <goal>generate-code-tests</goal>
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <uberJar>true</uberJar>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
-        <configuration>
-          <compilerArgs>
-            <arg>-parameters</arg>
-          </compilerArgs>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
         <configuration>
-          <systemPropertyVariables>
+          <systemProperties>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-            <maven.home>${maven.home}</maven.home>
-          </systemPropertyVariables>
+          </systemProperties>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.0.0-M5</version>
+      </plugin>
+
     </plugins>
   </build>
+
   <profiles>
     <profile>
       <id>native</id>
@@ -155,11 +156,9 @@
                   <goal>verify</goal>
                 </goals>
                 <configuration>
-                  <systemPropertyVariables>
+                  <systemProperties>
                     <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                    <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                    <maven.home>${maven.home}</maven.home>
-                  </systemPropertyVariables>
+                  </systemProperties>
                 </configuration>
               </execution>
             </executions>
