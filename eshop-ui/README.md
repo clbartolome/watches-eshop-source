@@ -14,6 +14,7 @@ ng serve
 
 ```sh
 # https://developers.redhat.com/blog/2019/11/27/handling-angular-environments-in-continuous-delivery-with-red-hat-openshift#how_to_apply_the_configuration_in_red_hat_openshift
+# https://github.com/petenorth/angular-5-example/blob/master/openshift/chained-s2i.yml
 
 # Create configmap
 oc create configmap config --from-file=<configMapLocation>/config.json
