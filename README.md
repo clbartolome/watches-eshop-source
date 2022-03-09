@@ -38,7 +38,7 @@ oc label dc catalog-db \
 
 # Catalog
 oc new-app --name=catalog \
-  https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=catalog \
+  https://github.com/clbartolome/watches-eshop-source --context-dir=catalog \
   -i ubi8-openjdk-11:1.3 \
   -e DB_HOST=catalog-db \
   -e DB_PORT=5432 \
@@ -81,7 +81,7 @@ oc label dc order-db \
   -n watches-eshop
 
 oc new-app --name=order \
-  openshift/ubi8-openjdk-11:1.3~https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=order \
+  openshift/ubi8-openjdk-11:1.3~https://github.com/clbartolome/watches-eshop-source --context-dir=order \
   -e DB_HOST=order-db \
   -e DB_PORT=5432 \
   -e DB_NAME=order-db \
@@ -122,7 +122,7 @@ oc label deploy payment-db \
   -n watches-eshop
 
 oc new-app --name=payment \
-  openshift/nodejs:12-ubi8~https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=payment \
+  openshift/nodejs:12-ubi8~https://github.com/clbartolome/watches-eshop-source --context-dir=payment \
   -e PORT=8080 \
   -e DB_HOST=payment-db \
   -e DB_PORT=27017 \
@@ -192,7 +192,7 @@ oc label deploy eshop-ui \
 oc annotate deploy eshop-ui app.openshift.io/connects-to='[{"apiVersion":"apps/v1","kind":"Deployment","name":"order"},{"apiVersion":"apps/v1","kind":"Deployment","name":"catalog"},{"apiVersion":"apps/v1","kind":"Deployment","name":"payment"}]' -n watches-eshop
 
 # Setup configuration (!! UPDATE URLS)
-cat <<'EOF' >> config.json
+cat <<'EOF' > config.json
 {
   "watchUrl": "http://catalog-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
   "watchPath": "/watches",
