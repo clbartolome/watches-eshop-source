@@ -8,6 +8,8 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 import java.util.List;
 
+import com.eshop.watches.catalog.entity.Watch;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,5 +101,21 @@ public class CatalogIntegrationTests {
         () -> assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode()));
   }
 
+  @Test
+  public void getWatchTest() {
+
+    ResponseEntity<Watch> response = restTemplate.getForEntity(baseUrl + "/watches/1", Watch.class);
+    assertAll(
+        () -> assertNotNull(response.getBody()),
+        () -> assertEquals(HttpStatus.OK, response.getStatusCode()));
+  }
+
+  @Test
+  public void getWatchTest_NotFound() {
+
+    ResponseEntity<Watch> response = restTemplate.getForEntity(baseUrl + "/watches/99", Watch.class);
+    assertAll(
+        () -> assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode()));
+  }
   // https://www.vincenzoracca.com/en/blog/framework/spring/integration-test/
 }

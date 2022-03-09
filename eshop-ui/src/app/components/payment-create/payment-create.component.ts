@@ -20,25 +20,25 @@ export class PaymentCreateComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private apiService: ApiService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-    
+
     let id = this.actRoute.snapshot.paramMap.get('id');
     this.getWatch(id);
     this.paymentForm = this.fb.group({
       name: ['', [Validators.required]],
-      description: [{value:'', disabled: true}, [Validators.required]],
+      description: [{ value: '', disabled: true }, [Validators.required]],
       card: ['', [Validators.required]],
-      price: [{value:'', disabled: true}, [Validators.required]]
+      price: [{ value: '', disabled: true }, [Validators.required]]
     })
   }
 
   getWatch(id: string | null) {
     this.apiService.getWatch(id).subscribe(data => {
-      
+
       this.paymentForm.setValue({
-        description:data['brand']['name'] + " " + data['model'],
+        description: data['brand']['name'] + " " + data['model'],
         price: data['price'],
         name: null,
         card: null
@@ -50,12 +50,21 @@ export class PaymentCreateComponent implements OnInit {
     this.submitted = true;
     if (this.paymentForm.value.name != null && this.paymentForm.value.card != null) {
       if (window.confirm('Are you sure?')) {
-        this.apiService.createPayment(this.paymentForm.value).subscribe(
+        this.apiService.createPayment(this.paymentForm.getRawValue()).subscribe(
           (res) => {
-            console.log('Employee successfully created!')
+            console.log('Payment successfully created!')
+            const body = { detail: `${res.name} - ${res.description} (${res.price} €) - ${res.createdAt}` };
+            this.apiService.createOrder(body).subscribe(
+              (res) => {
+                console.log('Order successfully created!')
+              }, (error) => {
+                console.log(error);
+                window.alert(error);
+              });
             this.router.navigateByUrl('/payment-list');
           }, (error) => {
             console.log(error);
+            window.alert(error);
           });
       }
       return true;
@@ -64,8 +73,8 @@ export class PaymentCreateComponent implements OnInit {
       return true;
     }
   }
-  onCancel(){
-      this.router.navigateByUrl('/watches-list');
+  onCancel() {
+    this.router.navigateByUrl('/watches-list');
   }
 
 
