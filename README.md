@@ -196,9 +196,9 @@ cat <<'EOF' >> config.json
 {
   "watchUrl": "http://catalog-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
   "watchPath": "/watches",
-  "paymentUrl": "payment-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
+  "paymentUrl": "http://payment-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
   "paymentPath": "/payments",
-  "orderUrl": "order-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
+  "orderUrl": "http://order-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
   "orderPath": "/orders"
 }
 EOF
