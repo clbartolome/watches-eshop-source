@@ -1,6 +1,7 @@
 package com.eshop.watches.catalog.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.eshop.watches.catalog.entity.Watch;
 import com.eshop.watches.catalog.service.WatchesService;
@@ -30,6 +31,15 @@ public class WatchesController {
     HttpStatus status = HttpStatus.OK;
     if (0 == watches.size()) status = HttpStatus.NO_CONTENT;
     return ResponseEntity.status(status).body(watches);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Watch> getWatch(@PathVariable Long id) {
+    Optional<Watch> watch = service.getWatch(id);
+
+    HttpStatus status = HttpStatus.OK;
+    if (!watch.isPresent()) status = HttpStatus.NO_CONTENT;
+    return ResponseEntity.status(status).body(watch.orElse(new Watch()));
   }
 
   @GetMapping("/brands/{brandId}")

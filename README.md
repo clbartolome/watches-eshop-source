@@ -38,7 +38,7 @@ oc label dc catalog-db \
 
 # Catalog
 oc new-app --name=catalog \
-  https://github.com/clbartolome/watches-eshop-source --context-dir=catalog \
+  https://github.com/clbartolome/watches-eshop-source#feature/openshift_deployment --context-dir=catalog \
   -i ubi8-openjdk-11:1.3 \
   -e DB_HOST=catalog-db \
   -e DB_PORT=5432 \

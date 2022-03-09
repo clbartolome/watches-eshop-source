@@ -12,5 +12,8 @@ public interface WatchRepository extends JpaRepository<Watch, Long>{
 
   @Query("SELECT w FROM Watch w WHERE w.brand.id=(:brandId)")
   List<Watch> findWatchesByBrandId(@Param("brandId") Long brandId);
+
+  @Query("SELECT w FROM Watch w WHERE w.id=(:watchId)")
+  Watch findWatchById(@Param("watchId") Long watchId);
   
 }

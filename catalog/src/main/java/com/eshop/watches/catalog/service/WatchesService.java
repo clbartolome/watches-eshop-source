@@ -1,6 +1,7 @@
 package com.eshop.watches.catalog.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.eshop.watches.catalog.entity.Watch;
 import com.eshop.watches.catalog.repository.WatchRepository;
@@ -18,6 +19,10 @@ public class WatchesService {
 
   public List<Watch> getAllWatches(){
     return watchRepository.findAll();    
+  }
+  
+  public Optional<Watch> getWatch(Long id){
+    return watchRepository.findById(id);
   }
 
   public List<Watch> getWatchesByBrandId(Long brandId){
