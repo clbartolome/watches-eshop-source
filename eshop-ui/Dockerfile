@@ -8,9 +8,7 @@ FROM registry.access.redhat.com/ubi8/nginx-120
 
 # Add application sources
 ADD nginx.conf "${NGINX_CONF_PATH}"
-ADD dist/eshop-ui .
-
-RUN ls
+ADD dist/eshop-ui /usr/share/nginx/html
 
 # Run script uses standard ways to run the application
 CMD nginx -g "daemon off;"
