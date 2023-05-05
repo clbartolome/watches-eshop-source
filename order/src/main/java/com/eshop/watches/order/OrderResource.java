@@ -29,8 +29,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/orders")
-@Produces(APPLICATION_JSON)
-@Consumes(APPLICATION_JSON)
 public class OrderResource {
 
   @GET
