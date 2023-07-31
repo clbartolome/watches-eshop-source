@@ -17,3 +17,12 @@ go run main.go
 ```
 
 ## Create Image
+
+```sh
+# Create image
+podman build -t eshop-gateway:1.0.0 . 
+
+# Tag and push into quay
+podman tag eshop-gateway:1.0.0 quay.io/demo-applications/eshop-gateway:1.0.0
+podman push quay.io/demo-applications/eshop-gateway:1.0.0
+```
