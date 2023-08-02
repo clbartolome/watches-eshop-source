@@ -2,7 +2,7 @@
 
 ## Application Diagram
 
-![architecture](architecture.png)
+![architecture](architecture_v2.png)
 
 ## Components
 - [Gateway](eshop-gateway/README.md)
