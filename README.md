@@ -5,6 +5,7 @@
 ![architecture](architecture.png)
 
 ## Components
+- [Gateway](eshop-gateway/README.md)
 - [Catalog](catalog/README.md)
 - [eShop User Interface](eshop-ui/README.md)
 - [Payment](payment/README.md)
@@ -47,9 +48,6 @@ oc new-app --name=catalog \
   -e DB_PASS=pass \
   -n watches-eshop
 
-# Expose service
-oc expose svc catalog
-
 
 # Catalog Labels
 oc label deploy catalog \
@@ -60,8 +58,6 @@ oc label deploy catalog \
 # Catalog Annotations
 oc annotate deploy catalog app.openshift.io/connects-to='[{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"catalog-db"}]' -n watches-eshop
 
-# Validate
-curl http://catalog-watches-eshop.{cluster-domain}/watches | jq
 ```
 
 - Deploy Order
@@ -89,10 +85,6 @@ oc new-app --name=order \
   -e DB_PASS=pass \
   -n watches-eshop
 
-# Expose service
-oc expose svc order
-
-
 # Catalog Labels
 oc label deploy order \
   app.kubernetes.io/part-of=watches-eshop \
@@ -102,8 +94,6 @@ oc label deploy order \
 # Catalog Annotations
 oc annotate deploy order app.openshift.io/connects-to='[{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"order-db"}]' -n watches-eshop
 
-# Validate
-curl http://order-watches-eshop.{cluster-domain}/orders | jq
 ```
 
 - Deploy Pay
@@ -131,22 +121,49 @@ oc new-app --name=payment \
   -e DB_PASS=pass \
   -n watches-eshop
 
-# Expose service
-oc expose svc payment
 
-
-# Catalog Labels
+# Labels
 oc label deploy payment \
   app.kubernetes.io/part-of=watches-eshop \
   app.openshift.io/runtime=nodejs \
   -n watches-eshop
 
-# Catalog Annotations
+# Annotations
 oc annotate deploy payment app.openshift.io/connects-to='[{"apiVersion":"apps/v1","kind":"Deployment","name":"payment-db"}]' -n watches-eshop
 
-# Validate
-curl http://order-watches-eshop.{cluster-domain}/payments | jq
 ```
+
+- Deploy Gateway
+```sh
+
+# Gateway
+oc new-app --name=gateway \
+  https://github.com/clbartolome/watches-eshop-source --context-dir=eshop-gateway \
+  -e CATALOG_SERVICE_URL=http://catalog.watches-eshop.svc.cluster.local:8080 \
+  -e ORDER_SERVICE_URL=http://order.watches-eshop.svc.cluster.local:8080 \
+  -e PAYMENT_SERVICE_URL=http://payment.watches-eshop.svc.cluster.local:5000 \
+  -e PORT=8080 \
+  -n watches-eshop
+
+# Expose service
+oc expose svc gateway
+
+
+# Labels
+oc label deploy catalog \
+  app.kubernetes.io/part-of=watches-eshop \
+  app.openshift.io/runtime=golang \
+  -n watches-eshop
+
+# Annotations
+oc annotate deploy eshop-ui app.openshift.io/connects-to='[{"apiVersion":"apps/v1","kind":"Deployment","name":"order"},{"apiVersion":"apps/v1","kind":"Deployment","name":"catalog"},{"apiVersion":"apps/v1","kind":"Deployment","name":"payment"}]' -n watches-eshop
+
+# Validate
+curl http://gateway-watches-eshop.{cluster-domain}/gw-catalog/watches | jq
+curl http://gateway-watches-eshop.{cluster-domain}/gw-order/orders | jq
+curl http://gateway-watches-eshop.{cluster-domain}/gw-payment/payments | jq
+```
+
 
 - Deploy UI:
 ```sh
@@ -189,17 +206,15 @@ oc label deploy eshop-ui \
   app.openshift.io/runtime=nginx \
   -n watches-eshop
 
-oc annotate deploy eshop-ui app.openshift.io/connects-to='[{"apiVersion":"apps/v1","kind":"Deployment","name":"order"},{"apiVersion":"apps/v1","kind":"Deployment","name":"catalog"},{"apiVersion":"apps/v1","kind":"Deployment","name":"payment"}]' -n watches-eshop
-
 # Setup configuration (!! UPDATE URLS)
 cat <<'EOF' > config.json
 {
-  "watchUrl": "http://catalog-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
-  "watchPath": "/watches",
-  "paymentUrl": "http://payment-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
-  "paymentPath": "/payments",
-  "orderUrl": "http://order-watches-eshop.apps.cluster-dsn85.dsn85.sandbox1459.opentlc.com",
-  "orderPath": "/orders"
+  "watchUrl": "http://gateway-watches-eshop.{cluster-domain}",
+  "watchPath": "/gw-catalog/watches",
+  "paymentUrl": "http://gateway-watches-eshop.{cluster-domain}",
+  "paymentPath": "/gw-payment/payments",
+  "orderUrl": "http://gateway-watches-eshop.{cluster-domain}",
+  "orderPath": "/gw-order/orders"
 }
 EOF
 
@@ -208,6 +223,8 @@ oc create configmap eshop-config --from-file=config.json -n watches-eshop
 oc set volume deploy/eshop-ui --add --type=configmap --configmap-name=eshop-config --mount-path=/usr/share/nginx/html/assets/config -n watches-eshop
 
 ```
+
+
 
 
 
